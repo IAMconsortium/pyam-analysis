@@ -11,6 +11,8 @@ import pandas as pd
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
+from pyam._debiasing import _compute_bias
+
 try:
     from datapackage import Package
 
@@ -956,6 +958,27 @@ class IamDataFrame(object):
             if exclude_on_fail and len(df) > 0:
                 self._exclude_on_fail(df)
             return df.reset_index()
+
+    def compute_bias(self, name, method, axis):
+        """Compute the bias weights and add to `self.meta`
+
+        Parameters
+        ----------
+        name : str
+           Column name in the `meta` dataframe
+        method : str
+            Method to compute the bias weights, see the notes
+        axis : str
+            Index dimensions on which apply the method
+
+        Notes
+        -----
+        The following `methods` are implemented:
+
+        - "count": count the number of scenarios grouped by `axis` names
+
+        """
+        _compute_bias(self, name, method, axis)
 
     def rename(
         self, mapping=None, inplace=False, append=False, check_duplicates=True, **kwargs
