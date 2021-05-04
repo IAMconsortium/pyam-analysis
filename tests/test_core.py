@@ -757,6 +757,13 @@ def test_interpolate_with_list(test_df_year):
     pd.testing.assert_series_equal(obs, exp)
 
 
+def test_interpolate_with_numpy_list(test_df_year):
+    test_df_year.interpolate(np.r_[2007 : 2008 + 1], inplace=True)
+    obs = test_df_year.filter(year=[2007, 2008])._data.reset_index(drop=True)
+    exp = pd.Series([3, 4, 1.5, 2, 4, 5], name="value")
+    pd.testing.assert_series_equal(obs, exp)
+
+
 def test_interpolate_full_example():
     cols = ["model_a", "scen_a", "World"]
     df = IamDataFrame(

@@ -628,7 +628,7 @@ class IamDataFrame(object):
         # could enforce as we do for year below
         if self.time_col == "time":
             time = list(map(np.datetime64, time))
-        elif not all(isinstance(x, int) for x in time):
+        elif not all(isinstance(x, (int, np.integer)) for x in time):
             raise ValueError(f"The `time` argument {time} contains non-integers")
 
         old_cols = list(ret[ret.time_col].unique())
