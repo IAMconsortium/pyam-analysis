@@ -960,22 +960,23 @@ class IamDataFrame(object):
             return df.reset_index()
 
     def compute_bias(self, name, method, axis):
-        """Compute the bias weights and add to `self.meta`
+        """Compute the bias weights and add to 'meta'
 
         Parameters
         ----------
         name : str
-           Column name in the `meta` dataframe
+           Column name in the 'meta' dataframe
         method : str
             Method to compute the bias weights, see the notes
         axis : str
-            Index dimensions on which apply the method
+            Index dimensions on which to apply the `method`
 
         Notes
         -----
-        The following `methods` are implemented:
 
-        - "count": count the number of scenarios grouped by `axis` names
+        The following methods are implemented:
+
+        - "count": use the inverse of the number of scenarios grouped by `axis` names
 
         """
         _compute_bias(self, name, method, axis)
