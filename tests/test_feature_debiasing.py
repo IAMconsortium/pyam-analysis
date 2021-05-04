@@ -16,3 +16,10 @@ def test_debiasing_count(test_pd_df, axis, exp):
     df.compute_bias(method="count", name="bias", axis=axis)
 
     assert_array_equal(df["bias"].values, exp)
+
+
+def test_debiasing_unknown_method(test_df_year):
+    """Check computing bias weights counting the number of scenarios by scenario name"""
+    msg = f"Unknown method foo for computing bias weights!"
+    with pytest.raises(ValueError, match=msg):
+        test_df_year.compute_bias(method="foo", name="bias", axis="scenario")
