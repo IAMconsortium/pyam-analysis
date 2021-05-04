@@ -1,13 +1,18 @@
 from pyam import IamDataFrame
+import pytest
 from numpy.testing import assert_array_equal
 
 
-def test_debiasing_count(test_pd_df):
+@pytest.mark.parametrize(
+    "axis, exp",
+    (["scenario", [2, 2, 1]], [["model", "scenario"], [1, 1, 1]]),
+)
+def test_debiasing_count(test_pd_df, axis, exp):
     """Check computing bias weights counting the number of scenarios by scenario name"""
 
     # modify the default test data to have three distinct scenarios
     test_pd_df.loc[1, "model"] = "model_b"
     df = IamDataFrame(test_pd_df)
-    df.compute_bias(method="count", name="bias", axis="scenario")
+    df.compute_bias(method="count", name="bias", axis=axis)
 
-    assert_array_equal(df["bias"].values, [2, 2, 1])
+    assert_array_equal(df["bias"].values, exp)
