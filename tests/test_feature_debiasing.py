@@ -5,7 +5,7 @@ from numpy.testing import assert_array_equal
 
 @pytest.mark.parametrize(
     "axis, exp",
-    (["scenario", [2, 2, 1]], [["model", "scenario"], [1, 1, 1]]),
+    (["scenario", [0.5, 0.5, 1]], [["model", "scenario"], [1, 1, 1]]),
 )
 def test_debiasing_count(test_pd_df, axis, exp):
     """Check computing bias weights counting the number of scenarios by scenario name"""
