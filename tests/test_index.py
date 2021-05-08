@@ -1,7 +1,8 @@
 import pytest
+import pandas as pd
 import pandas.testing as pdt
 
-from pyam.index import get_index_levels, replace_index_values
+from pyam.index import get_index_levels, replace_index_values, append_index_level
 from pyam import IAMC_IDX
 
 
@@ -41,3 +42,22 @@ def test_replace_index_level_raises(test_df_index):
     """Assert that replace_index_value raises with non-existing level"""
     with pytest.raises(KeyError):
         replace_index_values(test_df_index, "foo", {"scen_a": "scen_c"})
+
+
+def test_append_index():
+    """Assert that appending and re-ordering to an index works as expected"""
+
+    index = pd.MultiIndex(
+        codes=[[0, 1]],
+        levels=[["scen_a", "scen_b"]],
+        names=["scenario"],
+    )
+
+    obs = append_index_level(index, 0, "World", "region", order=["region", "scenario"])
+
+    exp = pd.MultiIndex(
+        codes=[[0, 0], [0, 1]],
+        levels=[["World"], ["scen_a", "scen_b"]],
+        names=["region", "scenario"],
+    )
+    pdt.assert_index_equal(obs, exp)

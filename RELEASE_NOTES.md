@@ -1,5 +1,6 @@
 # Next Release
 
+- [#527](https://github.com/IAMconsortium/pyam/pull/527) Add an in-dataframe subtraction operation
 - [#519](https://github.com/IAMconsortium/pyam/pull/519) Enable explicit `label` and fix for non-string items in plot legend 
 
 # Release v0.11.0

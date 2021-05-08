@@ -398,7 +398,8 @@ def merge_meta(left, right, ignore_conflict=False):
     if not diff.empty:
         left = left.append(right.loc[diff, :], sort=False)
 
-    return left
+    # remove any columns that are all-nan
+    return left.dropna(axis=1, how="all")
 
 
 def find_depth(data, s="", level=None):
